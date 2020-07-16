@@ -381,14 +381,18 @@ unsigned_num operator*(const unsigned_num& Multiplicand,const unsigned_num& Mult
     //choose dynamically between multiply_shift_add and Karatsuba's Algorithm
     if(!Multiplicand.is() || !Multiplier.is())
     {
-        return unsigned_num (1,true);
+        unsigned_num a(1,true);
+        // cout<<"Z\n"<<a;
+        return a;
     }
     const unsigned_num& multiplier=Multiplicand.len<Multiplier.len?Multiplicand:Multiplier;
     const unsigned_num& multiplicand=Multiplicand.len<Multiplier.len?Multiplier:Multiplicand;
 
     if(!(multiplier.len-1))
     {
-        return (multiply_shift_add(multiplicand,multiplier[0]));
+        unsigned_num a(multiply_shift_add(multiplicand,multiplier[0]));
+        // cout<<"Z\n"<<a;
+        return a;
     }
     unsigned_num Z(multiplicand.len+multiplier.len,true);
     digit Q=multiplier.len/2;
@@ -397,20 +401,20 @@ unsigned_num operator*(const unsigned_num& Multiplicand,const unsigned_num& Mult
     const unsigned_num M_h(multiplicand.sub_digits(Q,multiplicand.len-Q));//M={0 1 2 3 4 5}, Q=3,len=6, multiplicand.sub_digits(0,3) returns {0 1 2} and multiplicand.sub_digits(3,3) returns {3 4 5}
     const unsigned_num m_l(multiplier.sub_digits(0,Q));
     const unsigned_num m_h(multiplier.sub_digits(Q,multiplier.len-Q));
-    cout<<"Multiplicand high\n"<<M_h<<endl;
-    cout<<"Multiplicand low\n"<<M_l<<endl;
-    cout<<"Multiplier high\n"<<m_h<<endl;
-    cout<<"Multiplier low\n"<<m_l<<endl;
+    // cout<<"Multiplicand high\n"<<M_h<<endl;
+    // cout<<"Multiplicand low\n"<<M_l<<endl;
+    // cout<<"Multiplier high\n"<<m_h<<endl;
+    // cout<<"Multiplier low\n"<<m_l<<endl;
     const unsigned_num z0(M_l*m_l);
     const unsigned_num z2(M_h*m_h);
     const unsigned_num z1((M_l+M_h)*(m_l+m_h)-z0-z2);
-    cout<<"z2\n"<<z2<<endl;
-    cout<<"z1\n"<<z1<<endl;
-    cout<<"z0\n"<<z0<<endl;
+    // cout<<"z2\n"<<z2<<endl;
+    // cout<<"z1\n"<<z1<<endl;
+    // cout<<"z0\n"<<z0<<endl;
     Z.shift_and_add(z0,0);
     Z.shift_and_add(z1,Q);
     Z.shift_and_add(z2,2*Q);
-    cout<<"Z\n"<<Z;
+    // cout<<"Z\n"<<Z;
     return Z;
 }
 //unsigned_num dummy(const unsigned_num& A, const unsigned_num& b);
