@@ -1,3 +1,4 @@
+//Acknowledgements to Dhaval Bothra for introducing me to the Karatsuba Algorithm and to Jinay Shah for helping me debug, identifying sub_digits as the cause of errors in operator* and suggesting a fix.
 #ifndef NUM_HPP_INCLUDED
 #define NUM_HPP_INCLUDED
 
